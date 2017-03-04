@@ -27,8 +27,6 @@ Then, install the required python modules:
 ```
 sudo pip3 install flask
 sudo pip3 install ipapi
-sudo pip3 install sqlite3
-sudo pip3 install dateutil
 sudo pip3 install pycountry
 sudo pip3 install path.py
 ```
