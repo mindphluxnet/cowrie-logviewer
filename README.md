@@ -17,18 +17,27 @@ Since this is my first python project, I don't even know if this works with pyth
 I guess it does, but I wouldn't know anything about that. I used python3 so if you don't please
 change the following commands accordingly.
 
-sudo apt-get install python3
+Install python3 if you don't have it already:
 
+```
+sudo apt-get install python3
+```
+Then, install the required python modules:
+
+```
 sudo pip3 install flask
 sudo pip3 install ipapi
 sudo pip3 install sqlite3
 sudo pip3 install dateutil
 sudo pip3 install pycountry
 sudo pip3 install path.py
+```
 
 # Installation
 
+```
 git clone https://github.com/mindphluxnet/cowrie-logviewer
+```
 
 # Setup
 
@@ -43,7 +52,9 @@ on port 5000. You can also bind it to any IP address, just change the 'bind_host
 
 # Usage
 
+```
 python3 cowrie-logviewer.py
+```
 
 Once it's running, open 
 
