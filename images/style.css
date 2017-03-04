@@ -1,0 +1,8 @@
+      th, td {
+        font-size: 0.8em;
+      }
+      
+      body {        
+        min-height: 2000px;
+        padding-top: 70px;
+      }

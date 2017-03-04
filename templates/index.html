@@ -6,26 +6,16 @@
     <title>{{ logfile }} - Cowrie Log Viewer v{{ version }}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="/images/flags.min.css">
-    <style type="text/css">
-      th, td {
-        font-size: 0.8em;
-      }
-      
-      body {
-        padding: 10px;
-      }
-       
-    </style>
+    <link rel="stylesheet" href="/images/style.css">
   </head>
 <body>
+
+{% include 'navbar.html' %}
 
 <div class="container-lg">
   <div class="row">
     <div class="col-xs-12">
       <form class="form-inline">
-        <div class="form-group">
-          <h4>Cowrie Log Viewer <small>v{{ version }}</small></h4> 
-        </div>
         <div class="form-group pull-right">
           <label for="select-logfile">Selct log file</label>    
           <select name="logfile" class="form-control" id="select-logfile" onchange="javascript:document.location.href='/log/' + this[this.selectedIndex].value;">

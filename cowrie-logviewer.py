@@ -59,6 +59,8 @@ def show_stats():
 	conn = sqlite3.connect(sqlite_file)
 	c = conn.cursor()
 
+	page = 'stats'
+
 	files = get_files()
 
 	c.execute("SELECT countrycode, count(countrycode) AS attack_count FROM ip2country GROUP BY countrycode ORDER BY attack_count DESC")
@@ -70,7 +72,7 @@ def show_stats():
 		tmp = [ pycountry.countries.get(alpha_2=country[0]).name, country[0], country[1] ]
 		out.append(tmp)
 
-	return render_template('stats.html', countries = out, files = files, version = version)
+	return render_template('stats.html', countries = out, files = files, version = version, page = page)
 
 def get_files():
 	
@@ -84,6 +86,8 @@ def get_files():
 	return files
 
 def render_log(logfile):
+
+	page = 'log'
 
 	files = get_files()
 	
@@ -123,7 +127,7 @@ def render_log(logfile):
 			data.append(j)
 	
 	conn.close();					
-	return render_template('index.html', json = data, files = files, logfile = logfile, version = version)
+	return render_template('index.html', json = data, files = files, logfile = logfile, version = version, page = page)
 
 if __name__ == '__main__':
 	app.run(debug = debug, host = bind_host, port = bind_port)
