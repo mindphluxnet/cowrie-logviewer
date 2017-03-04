@@ -43,7 +43,7 @@ With the exception of the log file path, everything's preconfigured and ready to
 Edit cowrie-logviewer.py and change the 'log_path' variable accordingly. If you cloned
 to the cowrie parent directory, you can just leave the path.
 
-If you don't want debug messages, please change the 'debug' variable to False.
+If you want debug messages, please change the 'debug' variable to True.
 
 You can run the integrated web server on any port you desire. It's preconfigured to run
 on port 5000. You can also bind it to any IP address, just change the 'bind_host' variable.

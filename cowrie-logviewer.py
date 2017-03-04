@@ -8,18 +8,17 @@ import sqlite3
 import dateutil.parser
 import pycountry
 from path import Path
-import pprint
 
 #: change stuff here
 sqlite_file = 'ip2country.sqlite'
 log_path = '../cowrie/log'
 bind_host = '0.0.0.0'
 bind_port = 5000
-debug = True
+debug = False
 
 #: don't change stuff beyond this line
 
-version = '0.1'
+version = '0.1.1'
 
 conn = sqlite3.connect(sqlite_file)
 c = conn.cursor()
