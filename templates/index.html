@@ -1,0 +1,123 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <title>{{ logfile }} - Cowrie Log Viewer v{{ version }}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="/images/flags.min.css">
+    <style type="text/css">
+      th, td {
+        font-size: 0.8em;
+      }
+      
+      body {
+        padding: 10px;
+      }
+       
+    </style>
+  </head>
+<body>
+
+<div class="container-lg">
+  <div class="row">
+    <div class="col-xs-12">
+      <form class="form-inline">
+        <div class="form-group">
+          <h4>Cowrie Log Viewer <small>v{{ version }}</small></h4> 
+        </div>
+        <div class="form-group pull-right">
+          <label for="select-logfile">Selct log file</label>    
+          <select name="logfile" class="form-control" id="select-logfile" onchange="javascript:document.location.href='/log/' + this[this.selectedIndex].value;">
+          {%for file in files %}
+            <option value="{{ file }}"{%if logfile == file %}selected="selected"{% endif %}>{{ file }}</option>
+          {% endfor %}          
+          </select>    
+          
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+    <div class="table-responsive">
+      <table class="table table-condensed table-striped">
+      	<thead>
+          <th class="col-xs-1">Session</th>
+      		<th class="col-xs-1">Event</th>
+      		<th class="col-xs-2">Timestamp</th>    
+      		<th class="col-xs-2">Source IP:Port</th>
+      		<th class="col-xs-6">Message</th>
+      	</thead>
+      	<tbody>
+      		{% for key in json %}
+      		<tr>
+            <td>{{ key.session }}</td>
+      			<td>			
+      			{% if key.eventid == "cowrie.session.connect" %}
+      				<span class="text-info">Connect</span>
+      			{% endif %}
+      
+      			{% if key.eventid == "cowrie.client.version" %}
+      				<span class="text-info">Client version</span>
+      			{% endif %}
+      
+      			{%if key.eventid == "cowrie.login.success" %}
+      				<span class="text-success">Login success</span>
+      			{% endif %}
+      
+      			{%if key.eventid == "cowrie.session.closed" %}
+      				<span class="text-danger">Disconnect</span>
+      			{% endif %}
+      
+      			{%if key.eventid == "cowrie.client.size" %}
+      				<span class="text-info">Terminal size</span>
+      			{% endif %}
+      
+      			{% if key.eventid == "cowrie.log.open" %}
+      				<span class="text-info">TTY logging started</span>
+      			{% endif %}
+            
+      			{% if key.eventid == "cowrie.log.closed" %}
+      				<span class="text-info">TTY logging stopped</span>
+      			{% endif %}      
+      
+      			{% if key.eventid == "cowrie.command.input" %}
+      				<span class="text-info">Command entered</span>
+      			{% endif %}
+      
+      			{% if key.eventid == "cowrie.command.failed" %}
+      				<span class="text-danger">Command failed</span>
+      			{% endif %}	
+      
+      			{% if key.eventid == "cowrie.command.success" %}
+      				<span class="text-success">Command executed</span>
+      			{% endif %}		
+      
+      			{% if key.eventid == "cowrie.login.failed" %}
+      				<span class="text-danger">Login failed</span>
+      			{% endif %}
+      
+      			{% if key.eventid == "cowrie.direct-tcpip.request" %}
+      				<span class="text-info">TCP/IP request</span>
+      			{% endif %}
+            
+      			{% if key.eventid == "cowrie.direct-tcpip.data" %}
+      				<span class="text-info">TCP/IP data</span>
+      			{% endif %}      
+      
+      			</td>
+      			<td>{{ key.datetime }}</td>
+      			<td><img src="/images/pixel.gif" alt="{{ key.country_name }}" title="{{ key.country_name }}" class="flag flag-{{ key.country|lower }}" /> {{ key.src_ip }}{% if key.src_port|trim != '' %}:{{ key.src_port }}{% endif %}</td>
+      			<td>{{ key.message }}</td>
+      		</tr>
+      		{% endfor %}
+      	</tbody>
+      </table>
+     </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
