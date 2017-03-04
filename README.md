@@ -3,8 +3,8 @@
 A simple log viewer for the cowrie honeypot.
 
 This is my first python project so the code might or might not be terrible, but it works well 
-enough for me. So far, the only working feature is the actual log viewer. Since logs are split
-by day, you can select the log to view in the top right corner of the page.
+enough for me. Since logs are split by day, you can select the log to view in the top right corner
+of the page. Some rudimentary statistics are available as well.
 
 Attacker IPs are run against ipapi.co to find out which country they belong to. The results
 are cached in a sqlite database. The first time you open a log file, this can cause some
