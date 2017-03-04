@@ -8,6 +8,7 @@ import sqlite3
 import dateutil.parser
 import pycountry
 from path import Path
+import pprint
 
 #: change stuff here
 sqlite_file = 'ip2country.sqlite'
@@ -46,7 +47,7 @@ def send_image(path):
 	return send_from_directory('images', path)
 
 @app.route('/log/<string:logfile>')
-def show_log( logfile ):
+def show_log(logfile):
 	return render_log(logfile)
 
 @app.route('/')
@@ -56,20 +57,36 @@ def index():
 @app.route('/stats')
 def show_stats():
 	
-	conn = sqlite.connect(sqlite_file)
+	conn = sqlite3.connect(sqlite_file)
 	c = conn.cursor()
 
+	files = get_files()
 
-	return render_template('stats.html', stats = stats)
+	c.execute("SELECT countrycode, count(countrycode) AS attack_count FROM ip2country GROUP BY countrycode ORDER BY attack_count DESC")
+	countries = c.fetchall()		
 
-def render_log(logfile):
+	out = []
 
+	for country in countries:
+		tmp = [ pycountry.countries.get(alpha_2=country[0]).name, country[0], country[1] ]
+		out.append(tmp)
+
+	return render_template('stats.html', countries = out, files = files, version = version)
+
+def get_files():
+	
 	#: find all json log files
 
 	files = []
 	d = Path(log_path)
 	for f in d.files('*.json*'):
 		files.append(str(f.name))
+	
+	return files
+
+def render_log(logfile):
+
+	files = get_files()
 	
 	#: connect ip2country db
 
