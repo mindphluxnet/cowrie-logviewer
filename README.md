@@ -30,6 +30,7 @@ sudo pip3 install flask
 sudo pip3 install ipapi
 sudo pip3 install pycountry
 sudo pip3 install path.py
+sudo pip3 install flask-compress
 ```
 
 # Installation
@@ -49,6 +50,7 @@ the file you can change:
 - "bind_port" - the port the web server should listen to, default 5000
 - "min_upload_size" - min. file size in bytes to be to be listed on the "Uploaded files" page. Default is 1024
 - "debug" - if you want debug messages, set this to True. Default "False"
+- "use_gzip" - if you don't want gzip compression, set this to False. Default "True"
 
 # Usage
 

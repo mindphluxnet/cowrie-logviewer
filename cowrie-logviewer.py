@@ -8,6 +8,7 @@ import sqlite3
 import dateutil.parser
 import pycountry
 from path import Path
+from flask_compress import Compress
 
 #: change stuff here
 sqlite_file = 'ip2country.sqlite'
@@ -17,6 +18,7 @@ bind_host = '0.0.0.0'
 bind_port = 5000
 min_upload_size = 1024
 debug = False
+use_gzip = True
 
 #: don't change stuff beyond this line
 
@@ -42,6 +44,8 @@ conn.close()
 #: flask routes
 
 app = Flask(__name__, static_url_path = '')
+if(use_gzip):
+	Compress(app)
 
 @app.route('/images/<path:path>')
 def send_image(path):
