@@ -12,8 +12,10 @@ from path import Path
 #: change stuff here
 sqlite_file = 'ip2country.sqlite'
 log_path = '../cowrie/log'
+dl_path = '../cowrie/dl'
 bind_host = '0.0.0.0'
 bind_port = 5000
+min_upload_size = 1024
 debug = False
 
 #: don't change stuff beyond this line
@@ -53,6 +55,20 @@ def show_log(logfile):
 def index():
 	return render_log('cowrie.json')
 
+@app.route('/uploads')
+def show_files():
+
+	page = 'uploads'
+
+	uploads = get_uploaded_files()
+
+
+	return render_template('uploads.html', uploads = uploads, page = page, version = version)
+
+@app.route('/download/<path:filename>')
+def download_file(filename):
+	return send_from_directory(dl_path, filename)
+
 @app.route('/stats')
 def show_stats():
 	
@@ -60,8 +76,6 @@ def show_stats():
 	c = conn.cursor()
 
 	page = 'stats'
-
-	files = get_files()
 
 	c.execute("SELECT countrycode, count(countrycode) AS attack_count FROM ip2country GROUP BY countrycode ORDER BY attack_count DESC")
 	countries = c.fetchall()		
@@ -72,9 +86,9 @@ def show_stats():
 		tmp = [ pycountry.countries.get(alpha_2=country[0]).name, country[0], country[1] ]
 		out.append(tmp)
 
-	return render_template('stats.html', countries = out, files = files, version = version, page = page)
+	return render_template('stats.html', countries = out, version = version, page = page)
 
-def get_files():
+def get_log_files():
 	
 	#: find all json log files
 
@@ -85,11 +99,26 @@ def get_files():
 	
 	return files
 
-def render_log(logfile):
+def get_uploaded_files():
+
+	#: find all uploaded files >= small_upload_size (likely actual payloads)
+
+	uploaded_files = []
+	d = Path(dl_path)
+	for f in d.files('*'):
+		tmp = []
+		if(f.size >= min_upload_size and f.name != '.gitignore'):
+			tmp.append(str(f.name))
+			tmp.append(f.size)
+			uploaded_files.append(tmp)
+
+	return sorted(uploaded_files)
+
+def render_log(current_logfile):
 
 	page = 'log'
 
-	files = get_files()
+	logfiles = get_log_files()
 	
 	#: connect ip2country db
 
@@ -98,7 +127,7 @@ def render_log(logfile):
 
 	#: parse json log
 	data = []
-	with open(log_path + '/' + logfile) as f:
+	with open(log_path + '/' + current_logfile) as f:
 		for line in f:
 			j = json.loads(line)			
 			
@@ -127,7 +156,7 @@ def render_log(logfile):
 			data.append(j)
 	
 	conn.close();					
-	return render_template('index.html', json = data, files = files, logfile = logfile, version = version, page = page)
+	return render_template('index.html', json = data, logfiles = logfiles, current_logfile = current_logfile, version = version, page = page)
 
 if __name__ == '__main__':
 	app.run(debug = debug, host = bind_host, port = bind_port)

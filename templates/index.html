@@ -19,8 +19,8 @@
         <div class="form-group pull-right">
           <label for="select-logfile">Selct log file</label>    
           <select name="logfile" class="form-control" id="select-logfile" onchange="javascript:document.location.href='/log/' + this[this.selectedIndex].value;">
-          {%for file in files %}
-            <option value="{{ file }}"{%if logfile == file %}selected="selected"{% endif %}>{{ file }}</option>
+          {%for logfile in logfiles %}
+            <option value="{{ logfile }}"{%if current_logfile == logfile %}selected="selected"{% endif %}>{{ logfile }}</option>
           {% endfor %}          
           </select>    
           
