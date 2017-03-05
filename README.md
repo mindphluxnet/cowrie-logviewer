@@ -38,21 +38,17 @@ sudo pip3 install path.py
 git clone https://github.com/mindphluxnet/cowrie-logviewer
 ```
 
-# Setup
+# Configuration
 
-With the exception of the log file path, everything's preconfigured and ready to run.
-Edit cowrie-logviewer.py and change the 'log_path' variable accordingly. If you cloned
-to the cowrie parent directory, you can just leave the path.
+Edit cowrie-logviewer.py to configure the script. There are several variables at the top of
+the file you can change:
 
-If you want debug messages, please change the 'debug' variable to True.
-
-By default, files uploaded by attackers are ignored if they are below 1024 bytes in size.
-You can change that value by editing the 'min_upload_size' variable. However, restricting
-the size makes sense since most files in the upload directory are very small and don't contain
-anything of value.
-
-You can run the integrated web server on any port you desire. It's preconfigured to run
-on port 5000. You can also bind it to any IP address, just change the 'bind_host' variable.
+- "log_path" - the path to the cowrie log directory
+- "dl_path" - the path to the cowrie dl (downloads) directory
+- "bind_host" - the IP address the web server should bind to, default 0.0.0.0
+- "bind_port" - the port the web server should listen to, default 5000
+- "min_upload_size" - min. file size in bytes to be to be listed on the "Uploaded files" page. Default is 1024
+- "debug" - if you want debug messages, set this to True. Default "False"
 
 # Usage
 
