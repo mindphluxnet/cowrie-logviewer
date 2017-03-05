@@ -35,8 +35,13 @@ sudo pip3 install flask-compress
 
 # Installation
 
+Assuming you installed cowrie into your home directory:
+
 ```
+su cowrie
+cd ~/../cowrie
 git clone https://github.com/mindphluxnet/cowrie-logviewer
+cd cowrie-logviewer
 ```
 
 # Configuration
