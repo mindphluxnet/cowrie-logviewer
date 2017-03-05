@@ -17,8 +17,8 @@ dl_path = '../cowrie/dl'
 bind_host = '0.0.0.0'
 bind_port = 5000
 min_upload_size = 1024
-debug = True
-use_gzip = False
+debug = False
+use_gzip = True
 
 #: don't change stuff beyond this line
 
