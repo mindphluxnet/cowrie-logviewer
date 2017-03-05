@@ -4,7 +4,8 @@ A simple log viewer for the cowrie honeypot.
 
 This is my first python project so the code might or might not be terrible, but it works well 
 enough for me. Since logs are split by day, you can select the log to view in the top right corner
-of the page. Some rudimentary statistics are available as well.
+of the page. Some rudimentary statistics are available as well. Uploaded payloads can also be
+viewed and downloaded via the "Uploaded files" page.
 
 Attacker IPs are run against ipapi.co to find out which country they belong to. The results
 are cached in a sqlite database. The first time you open a log file, this can cause some
@@ -44,6 +45,11 @@ Edit cowrie-logviewer.py and change the 'log_path' variable accordingly. If you 
 to the cowrie parent directory, you can just leave the path.
 
 If you want debug messages, please change the 'debug' variable to True.
+
+By default, files uploaded by attackers are ignored if they are below 1024 bytes in size.
+You can change that value by editing the 'min_upload_size' variable. However, restricting
+the size makes sense since most files in the upload directory are very small and don't contain
+anything of value.
 
 You can run the integrated web server on any port you desire. It's preconfigured to run
 on port 5000. You can also bind it to any IP address, just change the 'bind_host' variable.
