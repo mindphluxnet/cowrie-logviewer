@@ -17,12 +17,12 @@ dl_path = '../cowrie/dl'
 bind_host = '0.0.0.0'
 bind_port = 5000
 min_upload_size = 1024
-debug = False
-use_gzip = True
+debug = True
+use_gzip = False
 
 #: don't change stuff beyond this line
 
-version = '0.1.1'
+version = '0.1.2'
 
 conn = sqlite3.connect(sqlite_file)
 c = conn.cursor()
@@ -101,7 +101,7 @@ def get_log_files():
 	for f in d.files('*.json*'):
 		files.append(str(f.name))
 	
-	return files
+	return sorted(files)
 
 def get_uploaded_files():
 
@@ -131,12 +131,13 @@ def render_log(current_logfile):
 
 	#: parse json log
 	data = []
+
 	with open(log_path + '/' + current_logfile) as f:
 		for line in f:
 			j = json.loads(line)			
 			
 			#: check if IP address is already in database first
-
+			
 			c.execute("SELECT countrycode FROM ip2country WHERE ipaddress='" + str(j['src_ip']) + "'")
 			ip_exists = c.fetchone()
 			if ip_exists:	
@@ -144,6 +145,7 @@ def render_log(current_logfile):
 			else:
 				#: look up IP via ipapi
 				j['country'] = ipapi.location(j['src_ip'], None, 'country')			
+
 				#: add ip/country pair to db
 				c.execute("INSERT OR IGNORE INTO ip2country(ipaddress, countrycode) VALUES ('" + str(j['src_ip']) + "', '" + j['country'] + "')")
 				conn.commit()
