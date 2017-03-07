@@ -56,7 +56,7 @@ the file you can change:
 - "min_upload_size" - min. file size in bytes to be to be listed on the "Uploaded files" page. Default is 1024
 - "debug" - if you want debug messages, set this to True. Default "False"
 - "use_gzip" - if you don't want gzip compression, set this to False. Default "True"
-- "filter_events" - a list of log events to filter. Default "[ 'cowrie.direct-tcpip.request', 'cowrie.direct-tcpip.data' ]
+- "filter_events" - a list of log events to filter. Default "[ 'cowrie.direct-tcpip.request', 'cowrie.direct-tcpip.data' ]"
 
 # Usage
 
