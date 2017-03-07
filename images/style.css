@@ -1,8 +1,13 @@
-      th, td {
-        font-size: 0.8em;
-      }
+th, td {
+	font-size: 0.8em;
+}
+
+td {
+	word-break: break-word;
+	word-wrap: break-word;
+}
       
-      body {        
-        min-height: 2000px;
-        padding-top: 70px;
-      }
+body {        
+	min-height: 2000px;
+	padding-top: 70px;
+}
