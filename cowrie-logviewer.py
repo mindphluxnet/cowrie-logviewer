@@ -19,6 +19,7 @@ bind_port = 5000
 min_upload_size = 1024
 debug = False
 use_gzip = True
+filter_events = [ 'cowrie.direct-tcpip.request', 'cowrie.direct-tcpip.data' ]
 
 #: don't change stuff beyond this line
 
@@ -136,6 +137,10 @@ def render_log(current_logfile):
 		for line in f:
 			j = json.loads(line)			
 			
+			#: filter out unwanted events
+			if(j['eventid'] in filter_events):
+				continue
+
 			#: check if IP address is already in database first
 			
 			c.execute("SELECT countrycode FROM ip2country WHERE ipaddress='" + str(j['src_ip']) + "'")

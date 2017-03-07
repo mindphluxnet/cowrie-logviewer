@@ -95,6 +95,9 @@
       			{% if key.eventid == "cowrie.direct-tcpip.data" %}
       				<span class="text-info">TCP/IP data</span>
       			{% endif %}      
+			{% if key.eventid == "cowrie.session.file_download" %}
+				<span class="text-info">File saved</span>
+			{% endif %}
       
       			</td>
       			<td>{{ key.datetime }}</td>
