@@ -56,6 +56,7 @@ the file you can change:
 - "min_upload_size" - min. file size in bytes to be to be listed on the "Uploaded files" page. Default is 1024
 - "debug" - if you want debug messages, set this to True. Default "False"
 - "use_gzip" - if you don't want gzip compression, set this to False. Default "True"
+- "filter_events" - a list of log events to filter. Default "[ 'cowrie.direct-tcpip.request', 'cowrie.direct-tcpip.data' ]
 
 # Usage
 
@@ -68,3 +69,12 @@ Once it's running, open
 http://yourhostname:5000 
 
 in the web browser of your choice.
+
+# Event filtering
+
+Some log events can be quite annoying since they provide very little insight into what's actually
+happening but take up huge amounts of log lines. By default, cowrie-logviewer filters out
+events related to tcp/ip forwarding. I implemented this after having some idiot attempt to
+abuse my honeypot for some kind of tcp/ip forwarding exploit for about 24 hours straight. This
+caused the logs to become almost unreadable. Filtering these events removes that annoyance.
+Of course, the actual log files still contain these events so nothing is lost.
