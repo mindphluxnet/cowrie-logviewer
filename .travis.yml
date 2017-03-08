@@ -1,2 +1,2 @@
 language: python
-script: pytest
+script: PYTHONPATH=${TRAVIS_BUILD_DIR} trial cowrie-logviewer.py
