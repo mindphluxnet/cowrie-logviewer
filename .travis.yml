@@ -4,4 +4,4 @@ python:
 - '3.4'
 - '3.6'
 
-script: python cowrie-logviewer.py
+script: python cowrie-logviewer.py test
