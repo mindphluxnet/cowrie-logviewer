@@ -1,0 +1,5 @@
+flask
+ipapi
+pycountry
+path.py
+flask-compress
