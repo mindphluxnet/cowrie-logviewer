@@ -1,5 +1,5 @@
 #: A simple log viewer for cowrie 
-#: Copyright 2017 by Richard 'mindphluxnet' Kämmerer (richard@richardkaemmerer.de)
+#: Copyright 2017 by Richard 'mindphluxnet' Kaemmerer (richard@richardkaemmerer.de)
 
 from flask import Flask, render_template, send_from_directory
 import sys
