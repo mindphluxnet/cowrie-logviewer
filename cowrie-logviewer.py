@@ -2,6 +2,7 @@
 #: Copyright 2017 by Richard 'mindphluxnet' Kämmerer (richard@richardkaemmerer.de)
 
 from flask import Flask, render_template, send_from_directory
+import sys
 import json
 import ipapi
 import sqlite3
@@ -51,6 +52,11 @@ conn.close()
 app = Flask(__name__, static_url_path = '')
 if(use_gzip):
 	Compress(app)
+try:
+	if(sys.argv[1] == 'test'):
+		sys.exit(0)
+except Exception:
+	pass
 
 @app.route('/images/<path:path>')
 def send_image(path):
