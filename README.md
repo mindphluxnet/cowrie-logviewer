@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mindphluxnet/cowrie-logviewer.svg?branch=master)](https://travis-ci.org/mindphluxnet/cowrie-logviewer)
+
 # cowrie-logviewer
 
 A simple log viewer for the cowrie honeypot.
@@ -14,23 +16,10 @@ have been cached.
 
 # Prerequisites
 
-Since this is my first python project, I don't even know if this works with python2 as well.
-I guess it does, but I wouldn't know anything about that. I used python3 so if you don't please
-change the following commands accordingly.
-
-Install python3 if you don't have it already:
+Install the required python modules:
 
 ```
-sudo apt-get install python3
-```
-Then, install the required python modules:
-
-```
-sudo pip3 install flask
-sudo pip3 install ipapi
-sudo pip3 install pycountry
-sudo pip3 install path.py
-sudo pip3 install flask-compress
+pip install -r requirements.txt
 ```
 
 # Installation
