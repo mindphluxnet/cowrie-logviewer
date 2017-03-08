@@ -14,14 +14,6 @@ are cached in a sqlite database. The first time you open a log file, this can ca
 delay if your internet connection is slow. Don't worry, it'll load much faster once the IPs
 have been cached.
 
-# Prerequisites
-
-Install the required python modules:
-
-```
-pip install -r requirements.txt
-```
-
 # Installation
 
 Assuming you installed cowrie into your home directory:
@@ -31,6 +23,12 @@ su cowrie
 cd ~/../cowrie
 git clone https://github.com/mindphluxnet/cowrie-logviewer
 cd cowrie-logviewer
+```
+
+# Prerequisites
+
+```
+pip install -r requirements.txt
 ```
 
 # Configuration
@@ -50,7 +48,7 @@ the file you can change:
 # Usage
 
 ```
-python3 cowrie-logviewer.py
+python cowrie-logviewer.py
 ```
 
 Once it's running, open 
