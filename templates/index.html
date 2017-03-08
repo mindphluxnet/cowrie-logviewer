@@ -12,22 +12,6 @@
 
 {% include 'navbar.html' %}
 
-<div class="container-lg">
-  <div class="row">
-    <div class="col-lg-12">
-      <form class="form-inline">
-        <div class="form-group pull-right">
-          <label for="select-logfile">Selct log file</label>    
-          <select name="logfile" class="form-control" id="select-logfile" onchange="javascript:document.location.href='/log/' + this[this.selectedIndex].value;">
-          {%for logfile in logfiles %}
-            <option value="{{ logfile }}"{%if current_logfile == logfile %}selected="selected"{% endif %}>{{ logfile }}</option>
-          {% endfor %}          
-          </select>    
-          
-        </div>
-      </form>
-    </div>
-  </div>
   <div class="row">
     <div class="col-lg-12">
     <div class="table">

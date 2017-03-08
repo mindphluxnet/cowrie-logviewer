@@ -15,6 +15,16 @@
             <li{% if page == 'stats' %} class="active"{% endif %}><a href="/stats">Statistics</a></li>
             <li{% if page == 'uploads' %} class="active"{% endif %}><a href="/uploads">Uploaded files</a></li>
           </ul>
+	  {% if page == 'log' %}
+	  <form class="pull-right">
+	  	<div>
+			<select name="logfile" class="form-control navbar-btn select-logfile" id="select-logfile" onchange="javascript:document.location.href='/log/'+this[this.selectedIndex].value;">
+				{% for logfile in logfiles %}				
+				<option value="{{ logfile }}"{% if current_logfile == logfile %}selected="selected"{% endif %}>{{ logfile }}</option>
+				{% endfor %}
+			</select>
+	  </form>
+	  {% endif %}
         </div><!--/.nav-collapse -->
       </div>
     </nav>
