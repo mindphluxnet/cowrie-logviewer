@@ -12,7 +12,13 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li{% if page == 'log' %} class="active"{% endif %}><a href="/">Home</a></li>
-            <li{% if page == 'stats' %} class="active"{% endif %}><a href="/stats">Statistics</a></li>
+	    <li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Statistics <span class="caret"></span></a>
+		<ul class="dropdown-menu">
+			<li{% if page == 'stats-countries' %} class="active"{% endif %}><a href="/stats/countries">Attackers by Country</a></li>
+			<li{% if page == 'stats-userpass' %} class="active"{% endif %}><a href="/stats/userpass">Usernames and Passwords</a></li>
+		</ul>
+	    </li>
             <li{% if page == 'uploads' %} class="active"{% endif %}><a href="/uploads">Uploaded files</a></li>
           </ul>
 	  {% if page == 'log' %}

@@ -108,7 +108,7 @@ def show_stats_countries():
 	conn = sqlite3.connect(sqlite_file)
 	c = conn.cursor()
 
-	page = 'stats'
+	page = 'stats-countries'
 
 	c.execute("SELECT countrycode, count(countrycode) AS attack_count FROM ip2country GROUP BY countrycode ORDER BY attack_count DESC")
 	countries = c.fetchall()		
