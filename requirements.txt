@@ -4,3 +4,4 @@ pycountry
 path.py
 flask-compress
 python-dateutil
+geoip2

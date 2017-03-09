@@ -4,17 +4,19 @@
 from flask import Flask, render_template, send_from_directory
 import sys
 import json
-import ipapi
+import geoip2.database
 import sqlite3
 import dateutil.parser
 import pycountry
 from path import Path
 from flask_compress import Compress
+import os.path
 
 #: change stuff here
 sqlite_file = 'cowrie-logviewer.sqlite'
 log_path = '../cowrie/log'
 dl_path = '../cowrie/dl'
+maxmind_path = 'maxmind/GeoLite2-Country.mmdb'
 bind_host = '0.0.0.0'
 bind_port = 5000
 min_upload_size = 1024
@@ -75,6 +77,12 @@ try:
 		debug = True
 except Exception:
 	pass
+
+#: check if maxmind db exists (this is located here so travis tests don't fail)
+
+if(os.path.isfile(maxmind_path) == False):
+        print("Error: MaxMind GeoIP database file is not properly installed, please check the configuration!")
+        sys.exit(1)
 
 @app.route('/images/<path:path>')
 def send_image(path):
@@ -174,6 +182,8 @@ def render_log(current_logfile):
 	conn = sqlite3.connect(sqlite_file)
 	c = conn.cursor()
 
+	reader = geoip2.database.Reader(maxmind_path)
+
 	#: parse json log
 	data = []
 
@@ -187,24 +197,25 @@ def render_log(current_logfile):
 
 			#: check if IP address is already in database first
 			
-			c.execute("SELECT countrycode FROM ip2country WHERE ipaddress='" + str(j['src_ip']) + "'")
+			c.execute("SELECT countrycode FROM ip2country WHERE ipaddress=?", [ j['src_ip'] ])
 			ip_exists = c.fetchone()
 			if ip_exists:	
 				j['country'] = ip_exists[0]
 			else:
-				#: look up IP via ipapi
-				j['country'] = ipapi.location(j['src_ip'], None, 'country')			
+				#: look up IP via maxmind geoip
+	
+				tmp = reader.country(j['src_ip'])
+				j['country'] = tmp.country.iso_code
 
 				#: add ip/country pair to db
-				c.execute("INSERT OR IGNORE INTO ip2country(ipaddress, countrycode) VALUES ('" + str(j['src_ip']) + "', '" + j['country'] + "')")
-				conn.commit()
+				c.execute("INSERT OR IGNORE INTO ip2country(ipaddress, countrycode) VALUES (?, ?)", [ j['src_ip'], j['country'] ])
 
 			#: add username/password pair to db
 
 			if(j['eventid'] == 'cowrie.login.success'):
-				c.execute("INSERT OR IGNORE INTO loginpass(session, username, password, failed) VALUES ('" + j['session'] + "','" + j['username'] + "','" + j['password'] + "', '0')")
+				c.execute("INSERT OR IGNORE INTO loginpass(session, username, password, failed) VALUES (?, ?, ?, ?)", [ j['session'], j['username'], j['password'], 0 ])
 			elif(j['eventid'] == 'cowrie.login.failed'):
-				c.execute("INSERT OR IGNORE INTO loginpass(session, username, password, failed) VALUES ('" + j['session'] + "', '" + j['username'] + "', '" + j['password'] + "', '1')");
+				c.execute("INSERT OR IGNORE INTO loginpass(session, username, password, failed) VALUES (?, ?, ?, ?)", [ j['session'], j['username'], j['password'], 1 ])
 				
 
 			#: fix date/time to remove milliseconds and other junk
@@ -212,13 +223,10 @@ def render_log(current_logfile):
 			tmp = j['datetime'].split('.')
 			j['datetime'] = tmp[0]
 
-			#: convert country code to human readable
-			country = pycountry.countries.get(alpha_2=j['country'])
-			j['country_name'] = str(country.name)
-
 			data.append(j)
-	
-	conn.close();					
+
+	conn.commit()	
+	conn.close()					
 	return render_template('index.html', json = data, logfiles = logfiles, current_logfile = current_logfile, version = version, page = page)
 
 if __name__ == '__main__':
