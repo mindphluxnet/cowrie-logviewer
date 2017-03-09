@@ -36,11 +36,23 @@ try:
 except sqlite3.OperationalError:
 	pass
 try:
+	c.execute('CREATE TABLE loginpass (session TEXT, username TEXT, password TEXT)')
+except sqlite3.OperationalError:
+	pass
+try:
 	c.execute('CREATE INDEX ipindex ON ip2country(ipaddress)')
 except sqlite3.OperationalError:
 	pass
 try:
 	c.execute('CREATE INDEX countryindex ON ip2country(countrycode)')
+except sqlite3.OperationalError:
+	pass
+try:
+	c.execute('CREATE INDEX usernameindex ON loginpass(username)')
+except sqlite3.OperationalError:
+	pass
+try:
+	c.execute('CREATE INDEX passwordindex ON loginpass(password)')
 except sqlite3.OperationalError:
 	pass
 
