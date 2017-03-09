@@ -12,7 +12,7 @@ from path import Path
 from flask_compress import Compress
 
 #: change stuff here
-sqlite_file = 'ip2country.sqlite'
+sqlite_file = 'cowrie-logviewer.sqlite'
 log_path = '../cowrie/log'
 dl_path = '../cowrie/dl'
 bind_host = '0.0.0.0'
@@ -36,7 +36,7 @@ try:
 except sqlite3.OperationalError:
 	pass
 try:
-	c.execute('CREATE TABLE loginpass (session TEXT(8), username TEXT, password TEXT)')
+	c.execute('CREATE TABLE loginpass (session TEXT(8), username TEXT, password TEXT, failed BOOL, UNIQUE(session, username, password))')
 except sqlite3.OperationalError:
 	pass
 try:
@@ -199,7 +199,10 @@ def render_log(current_logfile):
 			#: add username/password pair to db
 
 			if(j['eventid'] == 'cowrie.login.success'):
-				c.execute("INSERT OR IGNORE INTO loginpass(session, username, password) VALUES ('" + j['session'] + "','" + j['username'] + "','" + j['password'] + "')")
+				c.execute("INSERT OR IGNORE INTO loginpass(session, username, password, failed) VALUES ('" + j['session'] + "','" + j['username'] + "','" + j['password'] + "', '0')")
+			elif(j['eventid'] == 'cowrie.login.failed'):
+				c.execute("INSERT OR IGNORE INTO loginpass(session, username, password, failed) VALUES ('" + j['session'] + "', '" + j['username'] + "', '" + j['password'] + "', '1')");
+				
 
 			#: fix date/time to remove milliseconds and other junk
 			j['datetime'] = str(dateutil.parser.parse(j['timestamp']))
