@@ -70,6 +70,12 @@ try:
 except Exception:
 	pass
 
+try:
+	if(sys.argv[1] == 'debug'):
+		debug = True
+except Exception:
+	pass
+
 @app.route('/images/<path:path>')
 def send_image(path):
 	return send_from_directory('images', path)
@@ -176,6 +182,11 @@ def render_log(current_logfile):
 				#: add ip/country pair to db
 				c.execute("INSERT OR IGNORE INTO ip2country(ipaddress, countrycode) VALUES ('" + str(j['src_ip']) + "', '" + j['country'] + "')")
 				conn.commit()
+
+			#: add username/password pair to db
+
+			if(j['eventid'] == 'cowrie.login.success'):
+				c.execute("INSERT OR IGNORE INTO loginpass(session, username, password) VALUES ('" + j['session'] + "','" + j['username'] + "','" + j['password'] + "')")
 
 			#: fix date/time to remove milliseconds and other junk
 			j['datetime'] = str(dateutil.parser.parse(j['timestamp']))
