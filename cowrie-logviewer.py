@@ -102,8 +102,8 @@ def show_files():
 def download_file(filename):
 	return send_from_directory(dl_path, filename)
 
-@app.route('/stats')
-def show_stats():
+@app.route('/stats/countries')
+def show_stats_countries():
 	
 	conn = sqlite3.connect(sqlite_file)
 	c = conn.cursor()
@@ -119,7 +119,7 @@ def show_stats():
 		tmp = [ pycountry.countries.get(alpha_2=country[0]).name, country[0], country[1] ]
 		out.append(tmp)
 
-	return render_template('stats.html', countries = out, version = version, page = page)
+	return render_template('stats_countries.html', countries = out, version = version, page = page)
 
 def get_log_files():
 	
