@@ -36,7 +36,7 @@ try:
 except sqlite3.OperationalError:
 	pass
 try:
-	c.execute('CREATE TABLE loginpass (session TEXT, username TEXT, password TEXT)')
+	c.execute('CREATE TABLE loginpass (session TEXT(8), username TEXT, password TEXT)')
 except sqlite3.OperationalError:
 	pass
 try:
