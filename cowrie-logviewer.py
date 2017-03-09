@@ -102,6 +102,19 @@ def show_files():
 def download_file(filename):
 	return send_from_directory(dl_path, filename)
 
+@app.route('/stats/userpass')
+def show_stats_userpass():
+
+	conn = sqlite3.connect(sqlite_file)
+	c = conn.cursor()
+
+	page = 'stats-userpass'
+
+	c.execute("SELECT username, count(username) AS username_count FROM loginpass GROUP BY username ORDER BY username_count DESC")
+	usernames = c.fetchall()
+
+	return render_template('stats_userpass.html', usernames = usernames, version = version, page = page)
+
 @app.route('/stats/countries')
 def show_stats_countries():
 	
