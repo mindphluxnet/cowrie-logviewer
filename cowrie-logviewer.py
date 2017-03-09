@@ -32,7 +32,7 @@ c = conn.cursor()
 #: setup sqlite db
 
 try:
-	c.execute('CREATE TABLE ip2country (ipaddress TEXT, countrycode TEXT)')
+	c.execute('CREATE TABLE ip2country (ipaddress TEXT, countrycode TEXT(2))')
 except sqlite3.OperationalError:
 	pass
 try:
