@@ -37,9 +37,31 @@
         </table>
        </div>
     </div>
+    <div class="col-xs-6">
+      <div class="table-responsive">
+        <table class="table table-condensed table-striped">
+                <thead>
+                        <th>Password</th>
+                        <th >Count</th>
+                </thead>
+                <tbody>
+                        {% for password in passwords  %}
+                        <tr>
+              <td>
+                {% if password[0] == "" %}(empty password){% else %}{{ password[0] }}{% endif %}
+              </td>
+                                <td>
+                {{ password[1] }}
+                                </td>
+                        </tr>
+                        {% endfor %}
+                </tbody>
+        </table>
+       </div>
+    </div>
   </div>
 </div>
-
+</div>
 </body>
 {% include 'scripts.html' %}
 </html>

@@ -113,7 +113,10 @@ def show_stats_userpass():
 	c.execute("SELECT username, count(username) AS username_count FROM loginpass GROUP BY username ORDER BY username_count DESC")
 	usernames = c.fetchall()
 
-	return render_template('stats_userpass.html', usernames = usernames, version = version, page = page)
+	c.execute("SELECT password, count(password) AS password_count FROM loginpass GROUP BY password ORDER BY password_count DESC")
+	passwords = c.fetchall()
+
+	return render_template('stats_userpass.html', usernames = usernames, passwords = passwords, version = version, page = page)
 
 @app.route('/stats/countries')
 def show_stats_countries():
