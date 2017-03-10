@@ -118,10 +118,10 @@ def show_stats_userpass():
 
 	page = 'stats-userpass'
 
-	c.execute("SELECT username, count(username) AS username_count FROM loginpass GROUP BY username ORDER BY username_count DESC")
+	c.execute("SELECT username, count(username) AS username_count FROM loginpass WHERE failed = 0 GROUP BY username ORDER BY username_count DESC")
 	usernames = c.fetchall()
 
-	c.execute("SELECT password, count(password) AS password_count FROM loginpass GROUP BY password ORDER BY password_count DESC")
+	c.execute("SELECT password, count(password) AS password_count FROM loginpass WHERE failed = 0 GROUP BY password ORDER BY password_count DESC")
 	passwords = c.fetchall()
 
 	return render_template('stats_userpass.html', usernames = usernames, passwords = passwords, version = version, page = page)
