@@ -24,6 +24,12 @@ git clone https://github.com/mindphluxnet/cowrie-logviewer
 cd cowrie-logviewer
 ```
 
+If you want, you can make the script executable:
+
+```
+chmod +x cowrie-logviewer.py
+```
+
 # Prerequisites
 
 ```
@@ -59,6 +65,12 @@ the file you can change:
 
 ```
 python cowrie-logviewer.py
+```
+
+or (if you made the script executable)
+
+```
+./cowrie-logviewer.py
 ```
 
 Once it's running, open 

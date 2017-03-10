@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 #: A simple log viewer for cowrie 
 #: Copyright 2017 by Richard 'mindphluxnet' Kaemmerer (richard@richardkaemmerer.de)
 
