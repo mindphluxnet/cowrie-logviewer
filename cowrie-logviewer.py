@@ -29,7 +29,7 @@ filter_events = [ 'cowrie.direct-tcpip.request', 'cowrie.direct-tcpip.data' ]
 
 #: don't change stuff beyond this line
 
-version = '0.1.2'
+version = '0.2.0'
 
 conn = sqlite3.connect(sqlite_file)
 c = conn.cursor()
