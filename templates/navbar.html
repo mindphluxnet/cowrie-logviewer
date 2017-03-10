@@ -26,7 +26,7 @@
 	  	<div>
 			<select name="logfile" class="form-control navbar-btn select-logfile" id="select-logfile" onchange="javascript:document.location.href='/log/'+this[this.selectedIndex].value;">
 				{% for logfile in logfiles %}				
-				<option value="{{ logfile }}"{% if current_logfile == logfile %}selected="selected"{% endif %}>{{ logfile }}</option>
+				<option value="{{ logfile[0] }}"{% if current_logfile == logfile[0] %}selected="selected"{% endif %}>{{ logfile[1] }}</option>
 				{% endfor %}
 			</select>
 	  </form>

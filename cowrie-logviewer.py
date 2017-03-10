@@ -11,6 +11,7 @@ import pycountry
 from path import Path
 from flask_compress import Compress
 import os.path
+import time
 
 #: change stuff here
 sqlite_file = 'cowrie-logviewer.sqlite'
@@ -152,7 +153,16 @@ def get_log_files():
 	files = []
 	d = Path(log_path)
 	for f in d.files('*.json*'):
-		files.append(str(f.name))
+		tmp = []
+		if f.name == 'cowrie.json':
+			tmp.append(f.name)
+			tmp.append(time.strftime("%Y-%m-%d"))
+			files.append(tmp)
+			continue
+		tmp.append(str(f.name))
+		split_string = f.name.split(".")
+		tmp.append(split_string[2].replace("_", "-"))
+		files.append(tmp)
 	
 	return sorted(files)
 
