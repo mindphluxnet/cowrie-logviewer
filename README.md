@@ -75,9 +75,9 @@ or (if you made the script executable)
 
 Once it's running, open 
 
-http://yourhostname:5000 
+http://yourhostname:yourport 
 
-in the web browser of your choice.
+in the web browser of your choice. The default port is 5000.
 
 # Event filtering
 
