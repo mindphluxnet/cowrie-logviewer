@@ -82,6 +82,9 @@
 			{% if key.eventid == "cowrie.session.file_download" %}
 				<span class="text-info">File saved</span>
 			{% endif %}
+			{%if key.eventid == "cowrie.client.var" %}
+				<span class="text-info">Client variables</span>
+			{% endif %}
       
       			</td>
       			<td>{{ key.datetime }}</td>
