@@ -26,7 +26,7 @@
         		{% for country in countries %}
         		<tr>
               <td>
-                <img src="/images/pixel.gif" alt="{{ country[0] }}" title="{{ country[0] }}" class="flag flag-{{ country[1]|lower }}" /> {{ country[0] }}
+                {% if country[1] != 'XX' %}<img src="/images/pixel.gif" alt="{{ country[0] }}" title="{{ country[0] }}" class="flag flag-{{ country[1]|lower }}" />{% endif %} {{ country[0] }}
               </td>
         			<td>			
                 {{ country[2] }}  

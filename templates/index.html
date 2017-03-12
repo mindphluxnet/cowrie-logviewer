@@ -85,7 +85,9 @@
       
       			</td>
       			<td>{{ key.datetime }}</td>
-      			<td><img src="/images/pixel.gif" alt="{{ key.country_name }}" title="{{ key.country_name }}" class="flag flag-{{ key.country|lower }}" /> {{ key.src_ip }}{% if key.src_port|trim != '' %}:{{ key.src_port }}{% endif %}</td>
+      			<td>
+				{% if key.country != 'XX' %}<img src="/images/pixel.gif" alt="{{ key.country_name }}" title="{{ key.country_name }}" class="flag flag-{{ key.country|lower }}" />{% endif %} {{ key.src_ip }}{% if key.src_port|trim != '' %}:{{ key.src_port }}{% endif %}
+			</td>
       			<td>{{ key.message }}</td>
       		</tr>
       		{% endfor %}
