@@ -4,14 +4,12 @@
 
 A simple log viewer for the cowrie honeypot.
 
-This is my first python project so the code might or might not be terrible, but it works well 
-enough for me. Since logs are split by day, you can select the log to view in the top right corner
+Since the JSON logs are split by day, you can select the log to view in the top right corner
 of the page. Some rudimentary statistics are available as well. Uploaded payloads can also be
 viewed and downloaded via the "Uploaded files" page.
 
 Attacker IPs are run against a local MaxMind GeoIP database to find out which country they belong to. The results
-are cached in a sqlite database. The first time you open a log file, this can cause some
-delay. Don't worry, it'll load much faster once the IPs have been cached.
+are cached in a sqlite database. 
 
 # Installation
 
@@ -87,3 +85,8 @@ events related to tcp/ip forwarding. I implemented this after having some idiot 
 abuse my honeypot for some kind of tcp/ip forwarding exploit for about 24 hours straight. This
 caused the logs to become almost unreadable. Filtering these events removes that annoyance.
 Of course, the actual log files still contain these events so nothing is lost.
+
+# Local network connections
+
+Since local network IPs aren't in the MaxMind database for obvious reasons, there's no flag icon
+attached to these connections. This isn't a bug, it's a feature.
