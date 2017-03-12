@@ -143,8 +143,12 @@ def show_stats_countries():
 	out = []
 
 	for country in countries:
-		tmp = [ pycountry.countries.get(alpha_2=country[0]).name, country[0], country[1] ]
-		out.append(tmp)
+		if(country[0] != 'XX'):
+			tmp = [ pycountry.countries.get(alpha_2=country[0]).name, country[0], country[1] ]
+			out.append(tmp)
+		else:
+			tmp = [ "Local network", "XX", country[1] ]
+			out.append(tmp)
 
 	return render_template('stats_countries.html', countries = out, version = version, page = page)
 
@@ -215,9 +219,11 @@ def render_log(current_logfile):
 				j['country'] = ip_exists[0]
 			else:
 				#: look up IP via maxmind geoip
-	
-				tmp = reader.country(j['src_ip'])
-				j['country'] = tmp.country.iso_code
+				try:		
+					tmp = reader.country(j['src_ip'])
+					j['country'] = tmp.country.iso_code
+				except Exception:
+					j['country'] = 'XX'			
 
 				#: add ip/country pair to db
 				c.execute("INSERT OR IGNORE INTO ip2country(ipaddress, countrycode) VALUES (?, ?)", [ j['src_ip'], j['country'] ])
